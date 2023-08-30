@@ -1,21 +1,27 @@
-package ch.csbe.productstore;
+package ch.csbe.productstore.resources.product;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("products")
 public class ProductController {
+    private ProductService productService;
+    public ProductController(ProductService productService){
+        this.productService = productService;
+    }
     @GetMapping("/")
     public String getProducts(){
         return "getProducts";
     }
     @GetMapping("/{id}")
-    public String getProduct( @PathVariable("id") int id ){
-        return "getProduct "+id;
+    public String getProduct( @PathVariable("id") Integer id ){
+        //return productService.getById(id);
+        return "";
     }
     @PostMapping("/")
-    public String postProduct(){
-        return "postProduct";
+    public String postProduct(@RequestBody Product product){
+        return "productService";
     }
     @PutMapping("/{id}")
     public String putProduct( @PathVariable("id") int id ){

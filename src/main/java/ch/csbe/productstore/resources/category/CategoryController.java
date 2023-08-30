@@ -1,10 +1,13 @@
-package ch.csbe.productstore;
+package ch.csbe.productstore.resources.category;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("categories")
 public class CategoryController {
+    @Autowired
+    CategoryRepository categoryRepository;
     @GetMapping("/{id}/products")
     public String getCategoryProducts( @PathVariable("id") int id ){
         return "getCategoryProducts "+id;

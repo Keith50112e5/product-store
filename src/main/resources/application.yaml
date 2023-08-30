@@ -1,8 +1,9 @@
+
 spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mariadb://localhost:3406/product-manager
+    url: jdbc:mariadb://127.0.0.1:${DB_PORT}/product-manager
     username: root
     password: ${PW}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -10,3 +11,5 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+server:
+  port: ${PORT}

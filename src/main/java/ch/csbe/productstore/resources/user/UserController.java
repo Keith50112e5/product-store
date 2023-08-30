@@ -1,10 +1,13 @@
-package ch.csbe.productstore;
+package ch.csbe.productstore.resources.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
+    @Autowired
+    UserRepository userRepository;
     @GetMapping("/")
     public String getUsers(){
         return "getUsers";
