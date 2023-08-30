@@ -11,7 +11,7 @@ public class Category {
     private Integer id;
 
     @Column(columnDefinition = "tinyint")
-    private String active;
+    private Integer active;
 
     @Column(columnDefinition = "varchar(255)")
     private String name;

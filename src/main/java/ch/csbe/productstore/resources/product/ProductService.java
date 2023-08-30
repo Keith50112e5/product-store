@@ -1,6 +1,7 @@
 package ch.csbe.productstore.resources.product;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import java.util.List;
@@ -8,10 +9,8 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Autowired
+    ProductRepository productRepository;
     public List<Product> get() {
         return productRepository.findAll();
     }
@@ -22,13 +21,15 @@ public class ProductService {
         }
         return new Product();
     }
-    public Product post(Product product) {
+    public Product create(Product product) {
         return productRepository.save(product);
     }
     public Product update(Integer id, Product product){
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()){
             Product existingProduct = productOptional.get();
+            existingProduct.setProduct(product);
+            return productRepository.save(existingProduct);
         }
         return new Product();
     }

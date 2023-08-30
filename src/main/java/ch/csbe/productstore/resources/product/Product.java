@@ -13,7 +13,7 @@ public class Product {
     private String sku;
 
     @Column(columnDefinition = "tinyint")
-    private String active;
+    private Boolean active;
 
     @Column(columnDefinition = "varchar(500)")
     private String name;
@@ -25,87 +25,93 @@ public class Product {
     private String description;
 
     @Column(columnDefinition = "float")
-    private String price;
+    private Float price;
 
     @Column(columnDefinition = "int")
-    private String stock;
+    private Integer stock;
 
     @ManyToOne()
     private Category category;
 
+    public void setProduct(Product product) {
+        this.sku = product.sku;
+        this.active = product.active;
+        this.name = product.name;
+        this.image = product.image;
+        this.description = product.description;
+        this.price = product.price;
+        this.stock = product.stock;
+    }
+
     public Integer getId() {
         return id;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getStock() {
-        return stock;
-    }
-
-    public Category getCategory() {
-        return category;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
+    public String getSku() {
+        return sku;
+    }
+
     public void setSku(String sku) {
         this.sku = sku;
     }
 
-    public void setActive(String active) {
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setPrice(String price) {
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public void setStock(String stock) {
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public void setProduct(Product product) {
-
     }
 }
