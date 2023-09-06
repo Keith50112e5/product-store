@@ -1,4 +1,4 @@
-package ch.csbe.productstore.resources.product;
+package ch.csbe.productstore.src.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,10 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
+    @GetMapping("/category/{id}")
+    public List<Product> getCategoryProducts( @PathVariable("id") Integer id ){
+        return productService.getByCategoryId(id);
+    }
     @GetMapping("/")
     public List<Product> getProducts(){
         return productService.get();
@@ -23,12 +27,12 @@ public class ProductController {
         return productService.create(product);
     }
     @PutMapping("/{id}")
-    public Product putProduct( @PathVariable("id") Integer id, @RequestBody Product product ){
-        return productService.update(id, product);
+    public Product putProduct(@PathVariable("id")Integer id,@RequestBody Product product){
+        return productService.update(id,product);
     }
     @DeleteMapping("/{id}")
-    public Void deleteProduct( @PathVariable("id") Integer id ){
-        return productService.deleteById(id);
+    public void deleteProduct( @PathVariable("id") Integer id ){
+        productService.deleteById(id);
     }
 
 }

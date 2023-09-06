@@ -1,8 +1,7 @@
-package ch.csbe.productstore.resources.category;
+package ch.csbe.productstore.src.category;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
-import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
