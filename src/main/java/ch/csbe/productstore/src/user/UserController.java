@@ -80,7 +80,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/admin/{id}")
-    //@Operation
+    @Operation(summary = "Funktion zur theoretischen Rollenbearbeitung.", description = "Bearbeitet in der Theorie die Rolle des Benutzers mittels ID zurück.")
     public String setAdmin(@PathVariable("id")UUID id) {
         return "User mit der Id " + id + " wäre nun theoretisch Admin!";
     }
