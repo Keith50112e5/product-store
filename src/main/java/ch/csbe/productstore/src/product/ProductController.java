@@ -1,5 +1,9 @@
 package ch.csbe.productstore.src.product;
 
+import ch.csbe.productstore.src.product.dto.ProductCreateDto;
+import ch.csbe.productstore.src.product.dto.ProductDetailDto;
+import ch.csbe.productstore.src.product.dto.ProductShowDto;
+import ch.csbe.productstore.src.product.dto.ProductUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,24 +15,24 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("/category/{id}")
-    public List<Product> getCategoryProducts( @PathVariable("id") Integer id ){
+    public List<ProductShowDto> getCategoryProducts( @PathVariable("id") Integer id ){
         return productService.getByCategoryId(id);
     }
-    @GetMapping("/")
-    public List<Product> getProducts(){
+    @GetMapping()
+    public List<ProductShowDto> getProducts(){
         return productService.get();
     }
     @GetMapping("/{id}")
-    public Product getProduct( @PathVariable("id") Integer id ){
+    public ProductDetailDto getProduct(@PathVariable("id") Integer id ){
         return productService.getById(id);
     }
-    @PostMapping("/")
-    public Product postProduct(@RequestBody Product product){
-        return productService.create(product);
+    @PostMapping()
+    public ProductDetailDto postProduct(@RequestBody ProductCreateDto productCreateDto){
+        return productService.create(productCreateDto);
     }
     @PutMapping("/{id}")
-    public Product putProduct(@PathVariable("id")Integer id,@RequestBody Product product){
-        return productService.update(id,product);
+    public ProductDetailDto putProduct(@PathVariable("id")Integer id,@RequestBody ProductUpdateDto productUpdateDto){
+        return productService.update(id,productUpdateDto);
     }
     @DeleteMapping("/{id}")
     public void deleteProduct( @PathVariable("id") Integer id ){

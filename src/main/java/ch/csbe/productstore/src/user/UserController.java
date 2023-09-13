@@ -1,5 +1,9 @@
 package ch.csbe.productstore.src.user;
 
+import ch.csbe.productstore.src.user.dto.UserCreateDto;
+import ch.csbe.productstore.src.user.dto.UserDetailDto;
+import ch.csbe.productstore.src.user.dto.UserShowDto;
+import ch.csbe.productstore.src.user.dto.UserUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -9,25 +13,25 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-    @GetMapping("/")
-    public List<User> getUsers(){
+    @GetMapping()
+    public List<UserShowDto> getUsers(){
         return userService.get();
     }
     @GetMapping("/{id}")
-    public User getUser(@PathVariable("id") Integer id){
+    public UserDetailDto getUser(@PathVariable("id") Integer id){
         return userService.getById(id);
     }
     @PostMapping("/signup")
-    public User register(@RequestBody User user){
-        return userService.create(user);
+    public UserDetailDto register(@RequestBody UserCreateDto userCreateDto){
+        return userService.create(userCreateDto);
     }
     @PostMapping("/signin")
-    public User login(@RequestBody User user){
-        return userService.login(user);
+    public UserDetailDto login(@RequestBody UserDetailDto userDetailDto){
+        return userService.login(userDetailDto);
     }
     @PutMapping("/{id}")
-    public User putUser(@PathVariable("id") Integer id,@RequestBody User user){
-        return userService.update(id,user);
+    public UserDetailDto putUser(@PathVariable("id") Integer id,@RequestBody UserUpdateDto userUpdateDto){
+        return userService.update(id,userUpdateDto);
     }
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Integer id){

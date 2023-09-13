@@ -28,17 +28,4 @@ public class Product {
     private Integer stock;
     @ManyToOne()
     private Category category;
-
-    public void setProduct(Product product) {
-        this.sku = product.sku;
-        this.active = product.active;
-        this.name = product.name;
-        this.image = product.image;
-        this.description = product.description;
-        this.price = product.price;
-        this.stock = product.stock;
-    }
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }

@@ -19,10 +19,4 @@ public class User {
     private String email;
     @Column(columnDefinition = "varchar(255)")
     private String password;
-    public void setUser(User user) {
-        this.name = user.name;
-        this.active = user.active;
-        this.email = user.email;
-        this.password = user.password;
-    }
 }
