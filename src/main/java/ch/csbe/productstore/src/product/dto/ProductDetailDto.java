@@ -1,10 +1,12 @@
 package ch.csbe.productstore.src.product.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(description = "DTO für die Detailansicht eines Produkts")
 public class ProductDetailDto {
     private Integer id;
     private String sku;

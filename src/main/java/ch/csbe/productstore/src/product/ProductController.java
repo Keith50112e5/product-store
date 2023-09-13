@@ -4,38 +4,62 @@ import ch.csbe.productstore.src.product.dto.ProductCreateDto;
 import ch.csbe.productstore.src.product.dto.ProductDetailDto;
 import ch.csbe.productstore.src.product.dto.ProductShowDto;
 import ch.csbe.productstore.src.product.dto.ProductUpdateDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
 @RestController
+@Tag(name="ProductController", description="Controller für die Produkte.")
 @RequestMapping("products")
 public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("/category/{id}")
-    public List<ProductShowDto> getCategoryProducts( @PathVariable("id") Integer id ){
+    @Operation(summary = "Findet eine Liste aller Produkte der Kategorie.", description = "Gibt die zu anzuzeigende Werte der Produkte der Kategorie als Liste zurück.")
+    public List<ProductShowDto> getCategoryProducts(
+            @Parameter(description = "Die ID des Produktes.")
+            @PathVariable("id") Integer id ){
         return productService.getByCategoryId(id);
     }
     @GetMapping()
+    @Operation(summary = "Findet eine Liste aller Produkte.", description = "Gibt die zu anzuzeigende Werte der Produkte der Kategorie als Liste zurück.")
     public List<ProductShowDto> getProducts(){
         return productService.get();
     }
     @GetMapping("/{id}")
-    public ProductDetailDto getProduct(@PathVariable("id") Integer id ){
+    @Operation(summary = "Findet ein Produkt durch die ID.", description = "Gibt die Details mittels ID des Produktes zurück.")
+    public ProductDetailDto getProduct(
+            @Parameter(description = "Die ID des Produktes.")
+            @PathVariable("id") Integer id ){
         return productService.getById(id);
     }
     @PostMapping()
-    public ProductDetailDto postProduct(@RequestBody ProductCreateDto productCreateDto){
+    @Operation(summary = "Erstellt ein Produkt durch die ID.", description = "Gibt die Details mittels der Produkt-Erstellwerte zurück.")
+    public ProductDetailDto postProduct(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Produkt-Erstellwerte.")
+            @RequestBody ProductCreateDto productCreateDto){
         return productService.create(productCreateDto);
     }
     @PutMapping("/{id}")
-    public ProductDetailDto putProduct(@PathVariable("id")Integer id,@RequestBody ProductUpdateDto productUpdateDto){
+    @Operation(summary = "Bearbeitet ein Produkt durch die ID.", description = "Gibt die Details mittels ID und Bearbeitungswerte des Produktes zurück.")
+    public ProductDetailDto putProduct(
+            @Parameter(description = "Die ID des Produktes.")
+            @PathVariable("id")Integer id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Produkt-Bearbeitungswerte.")
+            @RequestBody ProductUpdateDto productUpdateDto){
         return productService.update(id,productUpdateDto);
     }
     @DeleteMapping("/{id}")
-    public void deleteProduct( @PathVariable("id") Integer id ){
+    @Operation(summary = "Löscht ein Produkt durch die ID.", description = "Gibt ein OK mittels ID zurück.")
+    public void deleteProduct(
+            @Parameter(description = "Die ID des Produktes.")
+            @PathVariable("id") Integer id ){
         productService.deleteById(id);
     }
 
