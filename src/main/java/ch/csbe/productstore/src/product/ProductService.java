@@ -5,10 +5,14 @@ import ch.csbe.productstore.src.product.dto.ProductDetailDto;
 import ch.csbe.productstore.src.product.dto.ProductShowDto;
 import ch.csbe.productstore.src.product.dto.ProductUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements ProductServiceInterface {
@@ -30,23 +34,34 @@ public class ProductService implements ProductServiceInterface {
         }
         return productShowDtos;
     }
-    public ProductDetailDto getById(Integer id) {
-        Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
-        return productMapper.toDetailDto(product);
+    public ResponseEntity<ProductDetailDto> getById(Integer id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isEmpty()){
+            return new ResponseEntity<>(new ProductDetailDto(), HttpStatus.NOT_FOUND);
+        }
+        Product product = productOptional.get();
+        return new ResponseEntity<>(productMapper.toDetailDto(product), HttpStatus.OK);
     }
     public ProductDetailDto create(ProductCreateDto productCreateDto) {
         Product product = productMapper.toEntity(productCreateDto);
         Product save = productRepository.save(product);
         return productMapper.toDetailDto(save);
     }
-    public ProductDetailDto update(Integer id, ProductUpdateDto productUpdateDto){
-        Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
+    public ResponseEntity<ProductDetailDto> update(Integer id, ProductUpdateDto productUpdateDto){
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isEmpty()) {
+            return new ResponseEntity<>(new ProductDetailDto(), HttpStatus.NOT_FOUND);
+        }
+        Product product = productOptional.get();
         productMapper.update(productUpdateDto, product);
         Product save = productRepository.save(product);
-        return productMapper.toDetailDto(save);
+        return new ResponseEntity<>(productMapper.toDetailDto(save), HttpStatus.OK);
     }
-    public void deleteById(Integer id){
-        Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
-        productRepository.delete(product);
+    public ResponseEntity<Void> deleteById(Integer id){
+        if(!productRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        productRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

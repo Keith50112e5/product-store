@@ -6,6 +6,8 @@ import ch.csbe.productstore.src.category.dto.CategoryShowDto;
 import ch.csbe.productstore.src.category.dto.CategoryUpdateDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +22,29 @@ public class CategoryController {
     CategoryService categoryService;
     @GetMapping()
     @Operation(summary = "Findet eine Liste aller Kategorien.", description = "Gibt die zu anzuzeigende Werte der Kategorien als Liste zurück.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
+    })
     public List<CategoryShowDto> getCategories(){
         return categoryService.get();
     }
     @GetMapping("/{id}")
     @Operation(summary = "Findet eine Kategorie durch die ID.", description = "Gibt die Details mittels ID der Kategorien zurück.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
+            @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
+    })
     public CategoryDetailDto getCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id ){
         return categoryService.getById(id);
     }
     @PostMapping()
-    @Operation(summary = "Erstellt eine Kategorie durch die ID.", description = "Gibt die Details mittels der Kategorie-Erstellwerte zurück.")
+    @Operation(summary = "Erstellt eine Kategorie.", description = "Gibt die Details mittels der Kategorie-Erstellwerte zurück.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
+            @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
+    })
     public CategoryDetailDto postCategory(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Kategorie-Erstellwerte.")
             @RequestBody CategoryCreateDto categoryCreateDto){
@@ -39,6 +52,11 @@ public class CategoryController {
     }
     @PutMapping("/{id}")
     @Operation(summary = "Bearbeitet eine Kategorie durch die ID.", description = "Gibt die Details mittels ID und Bearbeitungswerte der Kategorien zurück.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
+            @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
+            @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
+    })
     public CategoryDetailDto putCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id,
@@ -48,6 +66,11 @@ public class CategoryController {
     }
     @DeleteMapping("/{id}")
     @Operation(summary = "Löscht eine Kategorie durch die ID.", description = "Gibt ein OK mittels ID zurück.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
+            @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
+            @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
+    })
     public void deleteCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id ){
