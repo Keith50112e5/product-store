@@ -2,9 +2,12 @@ package ch.csbe.productstore.src.category;
 
 import ch.csbe.productstore.src.category.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService implements CategoryServiceInterface {
@@ -21,23 +24,34 @@ public class CategoryService implements CategoryServiceInterface {
         }
         return categoryShowDtos;
     }
-    public CategoryDetailDto getById(Integer id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
-         return categoryMapper.toDetailDto(category);
+    public ResponseEntity<CategoryDetailDto> getById(Integer id) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return new ResponseEntity<>(new CategoryDetailDto(), HttpStatus.NOT_FOUND)
+        }
+        Category category = categoryOptional.get();
+        return new ResponseEntity<>(categoryMapper.toDetailDto(category), HttpStatus.OK);
     }
     public CategoryDetailDto create(CategoryCreateDto categoryCreateDto) {
         Category category = categoryMapper.toEntity(categoryCreateDto);
         Category save = categoryRepository.save(category);
         return categoryMapper.toDetailDto(save);
     }
-    public CategoryDetailDto update(Integer id, CategoryUpdateDto categoryUpdateDto) {
-        Category category = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
+    public ResponseEntity<CategoryDetailDto> update(Integer id, CategoryUpdateDto categoryUpdateDto) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isEmpty()) {
+            return new ResponseEntity<>(new CategoryDetailDto(), HttpStatus.NOT_FOUND);
+        }
+        Category category = categoryOptional.get();
         categoryMapper.update(categoryUpdateDto, category);
         Category save = categoryRepository.save(category);
-        return categoryMapper.toDetailDto(save);
+        return new ResponseEntity<>(categoryMapper.toDetailDto(save), HttpStatus.OK);
     }
-    public void delete(Integer id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
-        categoryRepository.delete(category);
+    public ResponseEntity<Void> delete(Integer id) {
+        if (categoryRepository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+        categoryRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "200", description = "Es hat erfolgreich funktioniert."),
             @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
     })
-    public CategoryDetailDto getCategory(
+    public ResponseEntity<CategoryDetailDto> getCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id ){
         return categoryService.getById(id);
@@ -57,7 +58,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
             @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
     })
-    public CategoryDetailDto putCategory(
+    public ResponseEntity<CategoryDetailDto> putCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Kategorie-Bearbeitungswerte.")
@@ -71,9 +72,9 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
             @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
     })
-    public void deleteCategory(
+    public ResponseEntity<Void> deleteCategory(
             @Parameter(description = "Die ID der Kategorie.")
             @PathVariable("id") Integer id ){
-        categoryService.delete(id);
+        return categoryService.delete(id);
     }
 }
