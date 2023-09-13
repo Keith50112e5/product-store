@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Schema(description = "DTO für die Erstellansicht eines Benutzers")
 public class UserCreateDto {
-    private String name;
-    private Integer active;
     private String email;
+    private String pw;
 }

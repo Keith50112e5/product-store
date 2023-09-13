@@ -1,5 +1,8 @@
 package ch.csbe.productstore.src.user;
 
+import ch.csbe.productstore.src.auth.LoginRequestDto;
+import ch.csbe.productstore.src.auth.TokenService;
+import ch.csbe.productstore.src.auth.TokenWrapper;
 import ch.csbe.productstore.src.user.dto.UserCreateDto;
 import ch.csbe.productstore.src.user.dto.UserDetailDto;
 import ch.csbe.productstore.src.user.dto.UserShowDto;
@@ -8,8 +11,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Tag(name="UserController", description="Controller für die Benutzer.")
@@ -17,6 +22,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    TokenService tokenService;
+
     @GetMapping()
     @Operation(summary = "Findet eine Liste aller Benutzer.", description = "Gibt die zu anzuzeigende Werte der Kategorien als Liste zurück.")
     public List<UserShowDto> getUsers(){
@@ -29,6 +37,7 @@ public class UserController {
             @PathVariable("id") Integer id){
         return userService.getById(id);
     }
+
     @PostMapping("/signup")
     @Operation(summary = "Registriert einen Benutzer.", description = "Gibt die Details mittels gegebenen Details des Benutzers zurück.")
     public UserDetailDto register(
@@ -38,10 +47,18 @@ public class UserController {
     }
     @PostMapping("/signin")
     @Operation(summary = "Loggt einen Benutzer ein.", description = "Gibt die Details mittels gegebenen Details des Benutzers zurück.")
-    public UserDetailDto login(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Details des Benutzers.")
-            @RequestBody UserDetailDto userDetailDto){
-        return userService.login(userDetailDto);
+    public TokenWrapper login(@RequestBody LoginRequestDto loginRequestDto) {
+        User user = this.userService.getUserWithCredentials(loginRequestDto);
+        if (user != null) {
+            TokenWrapper tokenWrapper = new TokenWrapper();
+            String token = this.tokenService.generateToken(user);
+            tokenWrapper.setToken(token);
+            return tokenWrapper;
+        } else {
+            // Errorhandling.
+            // Either return 401 or 400
+            return null;
+        }
     }
     @PutMapping("/{id}")
     @Operation(summary = "Bearbeitet einen Benutzer.", description = "Gibt die Details mittels ID und Bearbeitungswerte des Benutzers zurück.")
@@ -58,6 +75,14 @@ public class UserController {
             @Parameter(description = "Die ID des Benutzers.")
             @PathVariable("id") Integer id){
         userService.delete(id);
+    }
+
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PostMapping("/admin/{id}")
+    //@Operation
+    public String setAdmin(@PathVariable("id")UUID id) {
+        return "User mit der Id " + id + " wäre nun theoretisch Admin!";
     }
 
 }

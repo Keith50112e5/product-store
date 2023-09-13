@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Schema(description = "DTO für die Updateansicht eines Benutzers")
 public class UserUpdateDto {
-    private String name;
-    private Integer active;
     private String email;
+    private String pw;
 }

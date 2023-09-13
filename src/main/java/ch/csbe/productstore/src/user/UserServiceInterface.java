@@ -10,7 +10,6 @@ import java.util.List;
 public interface UserServiceInterface {
     List<UserShowDto> get();
     UserDetailDto getById(Integer id);
-    UserDetailDto login(UserDetailDto userDetailDto);
     UserDetailDto create(UserCreateDto userCreateDto);
     UserDetailDto update(Integer id, UserUpdateDto userUpdateDto);
     void delete(Integer id);

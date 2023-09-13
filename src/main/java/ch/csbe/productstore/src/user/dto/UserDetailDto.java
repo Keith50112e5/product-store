@@ -9,7 +9,5 @@ import lombok.Setter;
 @Schema(description = "DTO für die Detailansicht eines Benutzers")
 public class UserDetailDto {
     private Integer id;
-    private String name;
-    private Integer active;
     private String email;
 }
