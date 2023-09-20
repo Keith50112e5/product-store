@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @Schema(description = "DTO für die Erstellansicht einer Kategorie")
 public class CategoryCreateDto {
-    public Integer active;
+    public Boolean active;
     public String name;
 }

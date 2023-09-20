@@ -15,7 +15,7 @@ public class Product {
     @Column(columnDefinition = "varchar(100)")
     private String sku;
     @Column(columnDefinition = "tinyint")
-    private Integer active;
+    private Boolean active;
     @Column(columnDefinition = "varchar(500)")
     private String name;
     @Column(columnDefinition = "varchar(1000)")

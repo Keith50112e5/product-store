@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Schema(description = "DTO für die Anzeigeansicht einer Kategorie")
 public class CategoryShowDto {
-    private Integer active;
+    private Boolean active;
     private String name;
 }

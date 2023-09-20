@@ -18,10 +18,14 @@ public class User {
     private String email;
     @Column(columnDefinition = "varchar(255)")
     private String pw;
+    @Column(columnDefinition = "tinyint")
+    private Boolean is_admin;
 
     public List<String> getRoles() {
         List<String> hardcodedRoles = new ArrayList<>();
-        hardcodedRoles.add("ROLE_ADMIN");
+        if(this.is_admin){
+            hardcodedRoles.add("ROLE_ADMIN");
+        }
         return hardcodedRoles;
     }
 }

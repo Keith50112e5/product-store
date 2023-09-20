@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ProductDetailDto {
     private Integer id;
     private String sku;
-    private Integer active;
+    private Boolean active;
     private String name;
     private String image;
     private String description;

@@ -10,4 +10,5 @@ import lombok.Setter;
 public class UserCreateDto {
     private String email;
     private String pw;
+    private Boolean is_admin;
 }

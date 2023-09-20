@@ -15,7 +15,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(columnDefinition = "tinyint")
-    private Integer active;
+    private Boolean active;
     @Column(columnDefinition = "varchar(255)")
     private String name;
     @OneToMany(mappedBy = "category")

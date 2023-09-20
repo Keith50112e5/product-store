@@ -9,6 +9,6 @@ import lombok.Setter;
 @Schema(description = "DTO für die Detailansicht einer Kategorie")
 public class CategoryDetailDto {
     private Integer id;
-    private Integer active;
+    private Boolean active;
     private String name;
 }

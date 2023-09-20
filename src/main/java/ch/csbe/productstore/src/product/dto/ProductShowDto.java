@@ -10,7 +10,7 @@ import lombok.Setter;
 @Schema(description = "DTO für die Erstellansicht eines Produkts")
 public class ProductShowDto {
     private String sku;
-    private Integer active;
+    private Boolean active;
     private String name;
     private String image;
     private String description;

@@ -31,11 +31,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
                         .requestMatchers("/v3/api-docs/swagger-config").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().hasAuthority("ROLE_ADMIN")
                 );
         return http.build();
     }
-
-    //.anyRequest().authenticated()
-
 }
