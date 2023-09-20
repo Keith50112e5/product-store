@@ -19,11 +19,11 @@ public class User {
     @Column(columnDefinition = "varchar(255)")
     private String pw;
     @Column(columnDefinition = "tinyint")
-    private Boolean is_admin;
+    private Boolean isAdmin;
 
     public List<String> getRoles() {
         List<String> hardcodedRoles = new ArrayList<>();
-        if(this.is_admin){
+        if(this.isAdmin){
             hardcodedRoles.add("ROLE_ADMIN");
         }
         return hardcodedRoles;

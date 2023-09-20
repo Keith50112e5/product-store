@@ -10,5 +10,5 @@ import lombok.Setter;
 public class UserUpdateDto {
     private String email;
     private String pw;
-    private Boolean is_admin;
+    private Boolean isAdmin;
 }
