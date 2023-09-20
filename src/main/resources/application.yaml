@@ -3,9 +3,9 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mariadb://127.0.0.1:${DB_PORT}/product-manager
-    username: root
-    password: ${PW}
+    url: jdbc:mariadb://127.0.0.1:${DB_PORT}/${DB}
+    username: ${DB_USER}
+    password: ${DB_PW}
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     generate-ddl: true

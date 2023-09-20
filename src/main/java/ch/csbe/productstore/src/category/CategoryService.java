@@ -27,7 +27,7 @@ public class CategoryService implements CategoryServiceInterface {
     public ResponseEntity<CategoryDetailDto> getById(Integer id) {
         Optional<Category> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.isEmpty()) {
-            return new ResponseEntity<>(new CategoryDetailDto(), HttpStatus.NOT_FOUND)
+            return new ResponseEntity<>(new CategoryDetailDto(), HttpStatus.NOT_FOUND);
         }
         Category category = categoryOptional.get();
         return new ResponseEntity<>(categoryMapper.toDetailDto(category), HttpStatus.OK);
