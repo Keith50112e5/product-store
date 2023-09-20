@@ -46,10 +46,9 @@ public class UserService implements UserServiceInterface {
         User save = userRepository.save(user);
         return userMapper.toDetailDto(save);
     }
-    public UserDetailDto update(Integer id, UserUpdateDto userUpdateDto) {
+    public UserDetailDto promote(Integer id) {
         User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("ID: "+id+" not found!"));
-        userUpdateDto.setPw(user.getPw());
-        userMapper.update(userUpdateDto,user);
+        user.setIsAdmin(Boolean.TRUE);
         User save = userRepository.save(user);
         return userMapper.toDetailDto(save);
     }

@@ -11,6 +11,6 @@ public interface UserServiceInterface {
     List<UserShowDto> get();
     UserDetailDto getById(Integer id);
     UserDetailDto create(UserCreateDto userCreateDto);
-    UserDetailDto update(Integer id, UserUpdateDto userUpdateDto);
+    UserDetailDto promote(Integer id);
     void delete(Integer id);
 }

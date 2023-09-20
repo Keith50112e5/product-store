@@ -89,12 +89,10 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Es hat nicht funktioniert, da der Eintrag mit der Id nicht gefunden wurde."),
             @ApiResponse(responseCode = "403", description = "Es hat nicht funktioniert, da der Benutzer nicht Authentifiziert ist."),
     })
-    public UserDetailDto putUser(
+    public UserDetailDto promoteUser(
             @Parameter(description = "Die ID des Benutzers.")
-            @PathVariable("id") Integer id,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Die Benutzer-Bearbeitungswerte.")
-            @RequestBody UserUpdateDto userUpdateDto){
-        return userService.update(id,userUpdateDto);
+            @PathVariable("id") Integer id){
+        return userService.promote(id);
     }
     @DeleteMapping("/{id}")
     @Operation(summary = "Löscht einen Benutzer.", description = "Gibt ein OK mittels ID zurück.")
@@ -108,7 +106,6 @@ public class UserController {
             @PathVariable("id") Integer id){
         userService.delete(id);
     }
-
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/admin/{id}")
