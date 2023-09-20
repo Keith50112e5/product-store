@@ -10,6 +10,11 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
+  flyway:
+    url: jdbc:mariadb://127.0.0.1:${DB_PORT}/${DB}
+    schemas: ${DB}
+    user: ${DB_USER}
+    password: ${DB_PW}
 server:
   port: ${PORT}

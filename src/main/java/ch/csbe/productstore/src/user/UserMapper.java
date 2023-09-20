@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
         componentModel = "spring"
 )
 public abstract class UserMapper {
-    public  abstract User toEntity(UserCreateDto productCreateDto);
+    public abstract User toEntity(UserCreateDto productCreateDto);
     public abstract UserShowDto toShowDto(User user);
     public abstract UserDetailDto toDetailDto(User user);
     public abstract void update(UserUpdateDto userUpdateDto, @MappingTarget User user);

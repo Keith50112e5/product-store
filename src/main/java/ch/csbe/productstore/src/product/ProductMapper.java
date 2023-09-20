@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
   componentModel = "spring"
 )
 public abstract class ProductMapper {
-    public  abstract Product toEntity(ProductCreateDto productCreateDto);
+    public abstract Product toEntity(ProductCreateDto productCreateDto);
     public abstract ProductShowDto toShowDto(Product product);
     public abstract ProductDetailDto toDetailDto(Product product);
     public abstract void update(ProductUpdateDto productUpdateDto, @MappingTarget Product product);

@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
         componentModel = "spring"
 )
 public abstract class CategoryMapper {
-    public  abstract Category toEntity(CategoryCreateDto productCreateDto);
+    public abstract Category toEntity(CategoryCreateDto productCreateDto);
     public abstract CategoryShowDto toShowDto(Category category);
     public abstract CategoryDetailDto toDetailDto(Category category);
     public abstract void update(CategoryUpdateDto productUpdateDto, @MappingTarget Category category);
